@@ -1,0 +1,97 @@
+cabal: Entering directory '.'
+Configuring Proyecto-0.1.0.0...
+Warning: 'license: NONE' is not a recognised license. The known licenses are:
+GPL, GPL-2, GPL-3, LGPL, LGPL-2.1, LGPL-3, AGPL, AGPL-3, BSD2, BSD3, MIT, ISC,
+MPL-2.0, Apache, Apache-2.0, PublicDomain, AllRightsReserved, OtherLicense
+Preprocessing executable 'Proyecto' for Proyecto-0.1.0.0..
+Building executable 'Proyecto' for Proyecto-0.1.0.0..
+[4 of 4] Compiling Main             ( intento.hs, dist/dist-sandbox-22b17972/build/Proyecto/Proyecto-tmp/Main.o )
+
+intento.hs:11:15: error:
+    Not in scope: type constructor or class ‘GLfloat’
+   |
+11 | movimiento :: GLfloat
+   |               ^^^^^^^
+
+intento.hs:14:13: error:
+    Not in scope: type constructor or class ‘GLfloat’
+   |
+14 | rotacion :: GLfloat
+   |             ^^^^^^^
+
+intento.hs:29:49: error:
+    Not in scope: type constructor or class ‘GLfloat’
+   |
+29 |   clearColor      $= Color4 0.0 0.0 0.0 (1.0 :: GLfloat)
+   |                                                 ^^^^^^^
+
+intento.hs:40:67: error:
+    Not in scope: type constructor or class ‘GLfloat’
+   |
+40 |   materialAmbient  FrontAndBack $= (Color4 0.02 0.32 0.23 (1.0 :: GLfloat))
+   |                                                                   ^^^^^^^
+
+intento.hs:41:67: error:
+    Not in scope: type constructor or class ‘GLfloat’
+   |
+41 |   materialDiffuse FrontAndBack $= (Color4 0.29 0.6142 0.3 (1.0 :: GLfloat))
+   |                                                                   ^^^^^^^
+
+intento.hs:42:58: error:
+    Not in scope: type constructor or class ‘GLfloat’
+   |
+42 |   materialSpecular  FrontAndBack  $= (Color4 1 1 1 (1 :: GLfloat))
+   |                                                          ^^^^^^^
+
+intento.hs:51:12: error:
+    Not in scope: type constructor or class ‘DisplayCallback’
+   |
+51 | display :: DisplayCallback
+   |            ^^^^^^^^^^^^^^^
+
+intento.hs:64:21: error:
+    Not in scope: type constructor or class ‘Punto3CN’
+   |
+64 | drawPointsNormal :: Punto3CN -> IO ()
+   |                     ^^^^^^^^
+
+intento.hs:85:12: error:
+    Not in scope: type constructor or class ‘ReshapeCallback’
+   |
+85 | reshape :: ReshapeCallback
+   |            ^^^^^^^^^^^^^^^
+
+intento.hs:86:10: error: Not in scope: data constructor ‘Size’
+   |
+86 | reshape (Size x 0) = reshape (Size x 1)
+   |          ^^^^
+
+intento.hs:87:12: error: Not in scope: data constructor ‘Size’
+   |
+87 | reshape s@(Size x y) = do
+   |            ^^^^
+
+intento.hs:91:33: error:
+    Not in scope: type constructor or class ‘GLdouble’
+   |
+91 |   perspective 60 1 (-10) (10 :: GLdouble)
+   |                                 ^^^^^^^^
+
+intento.hs:94:62: error:
+    Not in scope: type constructor or class ‘GLdouble’
+   |
+94 |   lookAt (Vertex3 5 10 15) (Vertex3 5 1 5) (Vector3 0 1 (0 ::GLdouble))
+   |                                                              ^^^^^^^^
+
+intento.hs:98:21: error:
+    Not in scope: type constructor or class ‘Position’
+   |
+98 | keyboard :: Char -> Position ->  IO ()
+   |                     ^^^^^^^^
+
+intento.hs:134:29: error:
+    Not in scope: type constructor or class ‘GLfloat’
+    |
+134 |   scale (1.1) (1.1) (1.1 :: GLfloat)
+    |                             ^^^^^^^
+cabal: Leaving directory '.'

@@ -1,0 +1,10 @@
+cabal: Entering directory '/tmp/cabal-tmp-7760/hsnoise-0.0.2'
+Configuring hsnoise-0.0.2...
+Preprocessing library for hsnoise-0.0.2..
+Building library for hsnoise-0.0.2..
+[1 of 4] Compiling Numeric.Noise    ( src/Numeric/Noise.hs, dist/dist-sandbox-22b17972/build/Numeric/Noise.o )
+[2 of 4] Compiling Numeric.Noise.Perlin ( src/Numeric/Noise/Perlin.hs, dist/dist-sandbox-22b17972/build/Numeric/Noise/Perlin.o )
+[3 of 4] Compiling Numeric.Noise.Random ( src/Numeric/Noise/Random.hs, dist/dist-sandbox-22b17972/build/Numeric/Noise/Random.o )
+[4 of 4] Compiling Numeric.Noise.Ridged ( src/Numeric/Noise/Ridged.hs, dist/dist-sandbox-22b17972/build/Numeric/Noise/Ridged.o )
+Installing library in /home/ricardo/7mo/PD/Proyecto/.cabal-sandbox/lib/x86_64-linux-ghc-8.6.5/hsnoise-0.0.2-3v0yxuaKl3hl4z2aLUaC5
+cabal: Leaving directory '/tmp/cabal-tmp-7760/hsnoise-0.0.2'

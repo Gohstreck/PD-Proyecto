@@ -22,7 +22,7 @@ createLineAux = map (*incremento) [0..]
 createLine :: Int -> [GLfloat]
 createLine x = take x createLineAux
 
-{- | Se encargará de crear una matris de puntos de 100 x 100 (x, s). Cada punto y
+{- | Se encargará de crear una matriz de puntos de 100 x 100 (x, s). Cada punto y
 se creará con la función de generate Perlin
 -}
 
@@ -32,19 +32,42 @@ colorFromValue n =
   	let t = (\i -> 0.5 + 0.5*cos (i / 10))
   	Color3 (t n) (t (n + 2)) (t (n + 10))
 
+{- | Genera una matriz de Puntos. 
+Primero crea todas las tuplas del estilo (x,s), luego a cada tupla 
+le aplica una función para obtener su valor del perlin noise 
+de acuerdo a los valores especificados por RandomGenerator y los 
+mete dentro del constructor.
+-}
 generateVertexMatrix :: [Punto3C]
 generateVertexMatrix = map creaPuntos $ [(a, b) | a <- xs, b <- xs]
   where
     xs = createLine 100
 
+{- | Genera una matriz de Puntos con sus respectivas normales.
+
+-}
 generateVertexNormalMatrix :: [Punto3CN]
 generateVertexNormalMatrix = map sacaNormales generateVertexMatrix
 
+
+{- | Recibe una tupla de GLfloat @(x,s) y regresa un punto de la forma: 
+P @x@ (perlinNoise x s) @s@ (colorFromValue y). El color se obtiene de la función
+colorFromValue que le otorga colores diferentes a alturas diferentes.
+-}
 creaPuntos :: (GLfloat, GLfloat) -> Punto3C
 creaPuntos (n1,n2) = P3 n1 y n2 (colorFromValue y)
   where y = generatePerlin generateRandom n1 n2
 
+{- | Recibe un punto @p y regresa los puntos que se encuentran en su cuadrícula teniendo
+a @p@ como esquina inferior izquierda. 
 
+--------------------
+|arriba     diagonal|
+|                   |
+|p          der     |
+|___________________|
+
+-}
 agrupa4 :: Punto3C -> [Punto3C]
 agrupa4 p = [p, arriba, diagonal,der]
 	where
@@ -57,19 +80,16 @@ agrupa4 p = [p, arriba, diagonal,der]
 		arriba = P3 (x p) y2 s1 (Color3 0 0 0)
 		diagonal = P3 x1 y3 s1 (Color3 0 0 0)
 
+
+{- | Recibe un Punto3CN @p, obtiene sus vecinos y les saca la normal a cada uno
+usando la función sacaNormales
+-}
 agrupa4N :: Punto3CN ->  [Punto3CN]
 agrupa4N p = map (sacaNormales) (agrupa4 (P3 (x1 p) (y1 p) (s1 p) (c1 p)))
-{-	where
-		derX = (x1 p) + incremento
-		arribaS = (s1 p) + incremento
-		derY = generatePerlin generateRandom derX (s1 p)
-		arribaY = generatePerlin generateRandom (x1 p) arribaS
-		diagonalY = generatePerlin generateRandom derX arribaS
-		der = P3 x2 y2 (s p) (Color3 0 0 0)
-		abajo = P3 (x1 p) y3 s2 (Color3 0 0 0)
-		diagonal = P3 x1 y3 s2 (Color3 0 0 0)
--}
 
+{- | La normal se calcula obteniendo 2 puntos vecinos (arriba y der), les aplica la resta de vectores
+y saca su producto cruz.
+-}
 sacaNormales :: Punto3C -> Punto3CN
 sacaNormales p1 = P3N (x p1) p1xnn (y p1) p1ynn (s p1) p1snn (c p1)
   where

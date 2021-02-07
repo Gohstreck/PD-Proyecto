@@ -7,7 +7,7 @@ synopsis:            3D Procedural Generated Terrain made with Haskell. Basic Li
 -- description:
 homepage:            NONE
 license:             NONE
-license-file:        LICENSE
+--license-file:        LICENSE
 author:              Gohstreck
 maintainer:          ricardo_glz@ciencias.unam.mx
 -- copyright:
@@ -18,7 +18,7 @@ cabal-version:       >=1.10
 
 executable Proyecto
   main-is:             intento.hs
-  -- other-modules:
+  other-modules:    Matrices2, Puntos, RandomGenerator
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13, random >=1.1 && <1.2, hsnoise >=0.0 && <0.1, GLUT >=2.7 && <2.8, split >=0.2 && <0.3, OpenGL >=3.0 && <3.1
   -- hs-source-dirs:
