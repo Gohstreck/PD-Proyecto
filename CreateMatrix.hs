@@ -1,15 +1,23 @@
-module CreateMatrix where
-import Numeric.Noise.Perlin
-import Numeric.Decimal
+module ManipulaMatrices where
+
 import Graphics.Rendering.OpenGL
 import Graphics.UI.GLUT
-import System.Random
+import RandomGenerator
+
+
+--import Test.QuickCheck.Random 
+type Punto = (GLfloat, GLfloat, GLfloat)
+
+
+incremento :: GLfloat
+incremento = 0.0001
 
 {- | Crea una lista infinita desde el 1 aumentando el valor de cada elemento
 en 0.01 cada ves que se vuelve a mandar a llamar.
 -}
+
 createLineAux :: [GLfloat]
-createLineAux = map (\x -> x*0.01 :: GLfloat) [1..]
+createLineAux = map (*incremento) [0..]
 
 {- | La función recibe un entero @x y se encarga de crear una línea de tamaño 
 @x@ con valores desde el 1, aumentando de 0.01 en 0.01
@@ -17,43 +25,30 @@ createLineAux = map (\x -> x*0.01 :: GLfloat) [1..]
 createLine :: Int -> [GLfloat]
 createLine x = take x createLineAux 
 
-{- | La función se encargará de crear una semilla random 
-para pasarla como parámetro a generatePerlin
--}
-generateRandom :: IO Int
-generateRandom = do
-  r1 <- getStdGen
---  return (round $ (take 1 ns) * 100 )
-  let (x, r2) = randomR (0,100) r1
-  setStdGen r2
-  return x
-
-{- | Esta función se encarga de crear valores aleatorios para y. Recibe dos GLfloat
-que nos van a representar las coordenadas (x, s) de un punto y le regresa la coordenada
-y a ese punto. Siempre que se manda a llamar recibe una semilla distinta
-para que cada que se quiera crear un mapa distinto, las alturas varíen.
--}
-generatePerlin :: IO Int -> GLfloat -> GLfloat ->  IO GLfloat
-generatePerlin s x y = do 
-    let octaves     = 5
-    let scale       = 0.05
-    let persistance = 0.5
-    s2              <- s
-    let perlinNoise = perlin s2 octaves scale persistance 
-    return $ realToFrac $ noiseValue perlinNoise (realToFrac x, realToFrac y, 3)
 {- | Se encargará de crear una matris de puntos de 100 x 100 (x, s). Cada punto y
 se creará con la función de generate Perlin
 -}
-generateVertexMatrixAux :: IO Int -> [(GLfloat, IO GLfloat, GLfloat)]
-generateVertexMatrixAux r = do 
-  let xs = createLine 100
-  let ss = createLine 100
-  map (\ (x, s) -> (x, (generatePerlin r x s ), s) ) $ zipWith (,) xs ss
- -- let res = map (\(x, y, s) -> (x, y, s, colorFromValue y))
+generateVertexMatrixAux :: Int -> [(GLfloat, GLfloat, GLfloat)]
+generateVertexMatrixAux r = 
+  map (\ (x, s) -> (x, (generatePerlin r x s ), s) ) $ [(a, b) | a <- xs, b <- xs]
+  where 
+    xs = createLine 100
 
-generateMatrix :: [(GLfloat, IO GLfloat, GLfloat)]
+generateMatrix :: [(GLfloat, GLfloat, GLfloat)]
 generateMatrix = generateVertexMatrixAux generateRandom
 
+
+
+imprimeMatrix :: IO ()
+imprimeMatrix = do
+  mapM_ (imprime)  generateMatrix
+
+imprime :: (IO GLfloat, IO GLfloat, IO GLfloat) -> IO ()
+imprime (a, b, c) = do
+  a2 <- a
+  b2 <- b
+  c2 <- c 
+  putStrLn $ "x: "++(show a2) ++ "   y: " ++ (show b2) ++ "    s: "++(show c2)
 {-
 colorFromValue :: IO GLfloat -> Color3 GLfloat
 colorFromValue n =
